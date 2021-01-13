@@ -1,0 +1,26 @@
+[
+    {
+        "id":"1",
+        "dish": "com ga",
+        "gia": 20000,
+        "hinhanh": "hinh1.png"
+    },
+    {
+        "id":"2",
+        "dish": "com suon",
+        "gia": 25000,
+        "hinhanh": "hinh2.png"
+    },
+    {
+        "id":"3",
+        "dish": "com trung",
+        "gia": 15000,
+        "hinhanh": "hinh3.png"
+    },
+    {
+        "id":"4",
+        "dish": "com tam",
+        "gia": 22000,
+        "hinhanh": "hinh4.png"
+    }
+]
