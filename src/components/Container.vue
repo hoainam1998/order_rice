@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getDishes','getSelected'])
+    ...mapGetters(['getDishes'])
   },
   methods: {
     ...mapActions(["getAllDish"]),
@@ -49,10 +49,6 @@ export default {
     await this.getAllDish();
     let selected = this.$store.getters.getSelected;
     this.selected=selected;
-  },
-  mounted(){
-     
-     console.log('mounted');
   }
 };
 </script>
