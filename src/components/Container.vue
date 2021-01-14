@@ -1,8 +1,11 @@
 <template>
   <section>
-     <select v-model="selected">
-      <option v-for="dish in  getDishes" :key="dish.id" :value="dish.id">{{dish.dish}}</option>
-    </select> 
+    <select @change="filterdishes($event)">
+      <option value="all">All</option>
+      <option v-for="item in getListname" :key="item.name" :value="item.id">
+        {{ item.name }}
+      </option>
+    </select>
     <table class="table">
       <thead>
         <tr>
@@ -13,9 +16,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="dish in getDishes" :key="dish.id">
+        <tr
+          v-for="dish in getDishes"
+          :key="dish.id"
+          @click="showDish(dish.id)"
+          :class="{ select: dish.selected }"
+        >
           <th><img src="../assets/logo.png" alt="img" /></th>
-          <td>{{ dish.dish }}</td>
+          <td>{{ dish.name }}</td>
           <td>
             {{
               dish.gia.toLocaleString("it-IT", {
@@ -24,48 +32,50 @@
               })
             }}
           </td>
-          <td><input type="checkbox" name="datcomg" /></td>
-        </tr> 
+          <td>
+              <input type="checkbox" :checked="dish.dadat" :disabled="dish.dadat" @change="datcom(dish.id)" />
+          </td>
+        </tr>
       </tbody>
     </table>
   </section>
 </template>
 <script>
-import { mapActions , mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Contaner",
-  data(){
-    return{
-      selected: ''
-    }
-  },
-  computed: {
-    ...mapGetters(['getDishes'])
-  },
+  computed: mapGetters(["getDishes", "getListname"]),
   methods: {
-    ...mapActions(["getAllDish"]),
+    ...mapActions([
+      "filterDishes",
+      "setListname",
+      "selectDish",
+      "setSpecificDish",
+      "setListOrdered",
+    ]),
+    showDish(id) {
+      this.selectDish(id);
+      this.$emit("show-infor", id);
+    },
+    async filterdishes(evt) {
+      await this.filterDishes(evt);
+      await this.setSpecificDish();
+    },
+    datcom(id) {
+      this.setListOrdered(id);
+    },
   },
   async created() {
-    await this.getAllDish();
-    let selected = this.$store.getters.getSelected;
-    this.selected=selected;
+    await this.setListname();
   }
 };
 </script>
 <style scoped>
-section {
-  flex: 7;
-}
-
-img {
-  width: 50px;
-}
-
-td {
-  vertical-align: middle;
-}
-
 input[type="checkbox"] {
   transform: scale(2);
+}
+
+.select {
+  background-color: #c7ecee;
 }
 </style>

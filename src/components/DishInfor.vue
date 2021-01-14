@@ -3,11 +3,8 @@
     <div class="box">
       <img src="../assets/logo.png" alt="img" />
       <div class="infor">
-        <h3>Com ga</h3>
-        <span>Gia</span>
-        <div>
-          <button class="datcom">Dat com</button>
-        </div>
+        <h3>{{dish.name}}</h3>
+        <span>{{formatCurrency}}</span>
       </div>
     </div>
   </section>
@@ -15,11 +12,17 @@
 <script>
 export default {
   name: "DishInfor",
+  props: ['dish'],
+  computed:{
+    formatCurrency(){
+      return parseInt(this.dish.gia).toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+    }
+  }
 };
 </script>
 <style scoped>
 section {
-  flex: 3;
+  transition: .5s ease;
 }
 
 .box {

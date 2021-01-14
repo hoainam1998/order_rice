@@ -1,26 +1,34 @@
 [
     {
-        "id":"1",
-        "dish": "com ga",
+        "id":1,
+        "name": "com ga",
         "gia": 20000,
-        "hinhanh": "hinh1.png"
+        "hinhanh": "hinh1.png",
+        "selected":false,
+        "dadat":false
     },
     {
-        "id":"2",
-        "dish": "com suon",
+        "id":2,
+        "name": "com suon",
         "gia": 25000,
-        "hinhanh": "hinh2.png"
+        "hinhanh": "hinh2.png",
+        "selected":false,
+        "dadat":false
     },
     {
-        "id":"3",
-        "dish": "com trung",
+        "id":3,
+        "name": "com trung",
         "gia": 15000,
-        "hinhanh": "hinh3.png"
+        "hinhanh": "hinh3.png",
+        "selected":false,
+        "dadat":false
     },
     {
-        "id":"4",
-        "dish": "com tam",
+        "id":4,
+        "name": "com tam",
         "gia": 22000,
-        "hinhanh": "hinh4.png"
+        "hinhanh": "hinh4.png",
+        "selected":false,
+        "dadat":false
     }
 ]
