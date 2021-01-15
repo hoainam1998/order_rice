@@ -5,7 +5,8 @@
         "gia": 20000,
         "hinhanh": "hinh1.png",
         "selected":false,
-        "dadat":false
+        "dadat":false,
+        "soluong": 0
     },
     {
         "id":2,
@@ -13,7 +14,8 @@
         "gia": 25000,
         "hinhanh": "hinh2.png",
         "selected":false,
-        "dadat":false
+        "dadat":false,
+        "soluong": 0
     },
     {
         "id":3,
@@ -21,7 +23,8 @@
         "gia": 15000,
         "hinhanh": "hinh3.png",
         "selected":false,
-        "dadat":false
+        "dadat":false,
+        "soluong": 0
     },
     {
         "id":4,
@@ -29,6 +32,7 @@
         "gia": 22000,
         "hinhanh": "hinh4.png",
         "selected":false,
-        "dadat":false
+        "dadat":false,
+        "soluong": 0
     }
 ]

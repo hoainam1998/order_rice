@@ -4,7 +4,8 @@ const state = {
     selected: false,
     listname: [],
     specificDish: {},
-    listDishOrderd: []
+    listDishOrderd: [],
+    address: []
 }
 
 const getters = {
@@ -12,7 +13,8 @@ const getters = {
     getListname: (state) => (state.listname),
     getSelected: (state) => (state.selected),
     getSpecificDish: (state) => (state.specificDish),
-    getDishOrdered: (stata) => (stata.listDishOrderd)
+    getDishOrdered: (state) => (state.listDishOrderd),
+    getAddress: (state) => (state.address)
 }
 
 const actions = {
@@ -57,6 +59,16 @@ const actions = {
 
     removeItemOrdered({ commit }, id) {
         commit('removeItemOrdered', id);
+    },
+
+    updateListOrdered({commit},dish){
+        let updated_listDishOrderd=state.listDishOrderd.map(dishItem=>dishItem.id===dish.id?dish:dishItem);
+        commit('updatedListOrderd',updated_listDishOrderd)
+    },
+
+    async setAddress({ commit }) {
+        let address = await axios.get('./address.json');
+        commit('setAddress', address.data);
     }
 }
 
@@ -68,12 +80,15 @@ const mutations = {
     },
     setSpecificDish: (state, specificDish) => (state.specificDish = specificDish),
     setListOrdered: (state, dish) => {
-        state.listDishOrderd.unshift(dish);
-        state.dishes = state.dishes.map(d => d.id === dish.id ? { ...d, dadat: true } : d)
+        state.listDishOrderd.unshift({...dish,soluong:1});
+        state.dishes = state.dishes.map(d => d.id === dish.id ?{ ...d, dadat: true }: d)
     },
     removeItemOrdered: (state, id) => {
         state.listDishOrderd = state.listDishOrderd.filter(dish => dish.id !== id);
         state.dishes = state.dishes.map(dish => dish.id === id ? { ...dish, dadat: false } : dish)
-    }
+    },
+    updatedListOrderd:(state,updated_listDishOrderd)=>(state.listDishOrderd=updated_listDishOrderd),
+    setAddress: (state, address) => (state.address = address)
+
 }
 export default { state, getters, actions, mutations }

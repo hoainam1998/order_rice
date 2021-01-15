@@ -2,32 +2,40 @@
   <main>
     <Container v-on:show-infor="showInfor"/>
     <DishInfor v-bind:dish="getSpecificDish"/>
-    <OrderedBoard />
+    <OrderedBoard v-bind:showAddress="showAddress"/>
+    <Address v-bind:show="showaddress" />
   </main>
 </template>
 <script>
-import Container from "../components/Container";
-import DishInfor from "../components/DishInfor";
+import Container from "../components/Container"
+import DishInfor from "../components/DishInfor"
 import OrderedBoard from "../components/OrderedBoard"
+import Address from '../components/Address'
 import {mapActions,mapGetters} from 'vuex'
 export default {
   name: "Home",
   data(){
     return{
-      dish: {}
+      dish: {},
+      showaddress: false
     }
   },
   computed:mapGetters(['getSpecificDish']),
   components: {
     Container,
     DishInfor,
-    OrderedBoard
+    OrderedBoard,
+    Address
   },
   methods:{
     ...mapActions(['setAllDish','setSpecificDish']),
     async showInfor(id){
       await this.setSpecificDish(id)
     },
+    showAddress(show){
+      this.showaddress=show;
+      console.log('show address')
+    }
   },
   async created(){
     await this.setAllDish();
