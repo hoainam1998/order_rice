@@ -32,17 +32,12 @@
         <button type="submit" class="btn btn-primary w-100">Dat com</button>
       </form>
     </div>
-    <Input v-model="color" />{{color}}
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Input from './Input';
 export default {
   name: "Address",
-  components: {
-    Input
-  },
   data() {
     return {
       address: {
@@ -50,7 +45,6 @@ export default {
         so_nha: "",
         ten_duong: "",
       },
-      address1: 'hoai nam de thuong',
       err: [],
       color: "#e74c3c",
     };
