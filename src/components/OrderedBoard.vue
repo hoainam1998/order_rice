@@ -42,14 +42,14 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "OrderedBoard",
   props: ['showAddress'],
-  computed: mapGetters(["getDishOrdered"]),
+  computed: mapGetters('order_rice',["getDishOrdered"]),
   data(){
     return {
       tongthanhtien:0
     }
   },
   methods: {
-    ...mapActions(["removeItemOrdered","updateListOrdered"]),
+    ...mapActions('order_rice',["removeItemOrdered","updateListOrdered"]),
     formatCurrency(gia) {
       return parseInt(gia).toLocaleString("it-IT", {
         style: "currency",

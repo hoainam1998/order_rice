@@ -44,9 +44,9 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Contaner",
-  computed: mapGetters(["getDishes", "getListname"]),
+  computed: mapGetters('order_rice',["getDishes", "getListname"]),
   methods: {
-    ...mapActions([
+    ...mapActions('order_rice',[
       "filterDishes",
       "setListname",
       "selectDish",

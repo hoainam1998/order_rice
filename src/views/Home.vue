@@ -3,15 +3,16 @@
     <Container v-on:show-infor="showInfor"/>
     <DishInfor v-bind:dish="getSpecificDish"/>
     <OrderedBoard v-bind:showAddress="showAddress"/>
-    <Address v-bind:show="showaddress" />
+    <CustomerInfor v-bind:show="showaddress" />
   </main>
 </template>
 <script>
 import Container from "../components/Container"
 import DishInfor from "../components/DishInfor"
 import OrderedBoard from "../components/OrderedBoard"
-import Address from '../components/Address'
-import {mapActions,mapGetters} from 'vuex'
+import CustomerInfor from '../components/CustomerInfor'
+import {createNamespacedHelpers} from 'vuex'
+const {mapGetters,mapActions} =createNamespacedHelpers('order_rice');
 export default {
   name: "Home",
   data(){
@@ -25,7 +26,7 @@ export default {
     Container,
     DishInfor,
     OrderedBoard,
-    Address
+    CustomerInfor
   },
   methods:{
     ...mapActions(['setAllDish','setSpecificDish']),
