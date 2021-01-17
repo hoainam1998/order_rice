@@ -16,21 +16,25 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="dish in getDishOrdered" :key="dish.id">
               <th><img src="../assets/logo.png" alt="logo" /></th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>{{ dish.name }}</td>
+              <td>{{ formatCurrency(dish.gia) }}</td>
+              <td>{{ dish.soluong }}</td>
+              <td :data-total="dish.soluong * dish.gia" class="sub_total">
+                {{ formatCurrency(dish.gia * dish.soluong) }}
+              </td>
             </tr>
           </tbody>
         </table>
         <div class="total">
-          <span>Tong thanh tien: </span><span>10000 d</span>
+          <span>Tong thanh tien: </span
+          ><span>{{ formatCurrency(tongthanhtien) }}</span>
         </div>
-        <div class="address">
-          <span>Dia chi giao hang: </span
-          ><span>so 01, hung vuong, quy nhon, bind dinh</span>
+        <div class="inforCustomer">
+          <span v-for="infor in formatInforCustomerAddress" :key="infor.name"
+            >{{ infor.name + ": " + infor.value }}
+          </span>
         </div>
       </div>
       <div class="box-footer">
@@ -42,18 +46,73 @@
         </ul>
       </div>
     </div>
-    <router-link to="/" type="button" class="btn btn-primary">&larr; Dut tiep</router-link>
+    <router-link to="/" type="button" class="btn btn-primary"
+      >&larr; Dut tiep</router-link
+    >
   </main>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Success",
-  // computed:mapGetters(['getDishOrdered'])
+  computed: {
+    ...mapGetters("order_rice", ["getDishOrdered"]),
+    formatInforCustomerAddress() {
+      let customer = this.$store.getters["customer/getCustomer"];
+      let address = "";
+      let ten = customer.gioi_tinh + " " + customer.ten;
+      let sdt = customer.sdt;
+      let arrInfor = [
+        { name: "Ten", value: ten },
+        { name: "SDT", value: sdt },
+      ];
+      Object.keys(customer).forEach(function (fieldname) {
+        if (
+          fieldname === "so_nha" ||
+          fieldname === "ten_duong" ||
+          fieldname === "phuong"
+        ) {
+          let newFieldname = fieldname.split("_").join(" ");
+          newFieldname =
+            newFieldname.charAt(0).toUpperCase() +
+            newFieldname.slice(1, newFieldname.length);
+          let newPairFieldname_value =
+            newFieldname + "." + customer[`${fieldname}`];
+          address += newPairFieldname_value + ", ";
+        }
+      });
+
+      address += "TP.Quy Nhon,T.Bind Dinh";
+      arrInfor.push({ name: "Dia chi giao hang", value: address });
+      console.log(arrInfor);
+      return arrInfor;
+    },
+  },
   data() {
     return {
       tongthanhtien: 0,
     };
+  },
+  methods: {
+    ...mapActions("order_rice", ["removeAllItemOrdered"]),
+    formatCurrency(gia) {
+      return gia.toLocaleString("it-IT", {
+        style: "currency",
+        currency: "VND",
+      });
+    },
+  },
+  mounted() {
+    let tongthanhtien = 0;
+    document.querySelectorAll(".sub_total").forEach(function (item) {
+      tongthanhtien += parseInt(item.dataset.total);
+      console.log(tongthanhtien);
+    });
+
+    this.tongthanhtien = tongthanhtien;
+  },
+  beforeDestroy() {
+    this.removeAllItemOrdered();
   },
 };
 </script>
@@ -107,7 +166,7 @@ img {
 }
 
 .total,
-.address {
+.inforCustomer {
   padding: 0.5rem;
   border-radius: 4px;
   margin: 0.5rem 0;
@@ -118,7 +177,7 @@ img {
   background: #7ed6df;
 }
 
-.address {
+.inforCustomer {
   background: #ff7979;
 }
 
@@ -128,6 +187,15 @@ img {
 }
 
 .btn-primary {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
+}
+
+td:nth-child(2),
+.inforCustomer span {
+  text-transform: capitalize;
+}
+
+.inforCustomer span {
+  display: block;
 }
 </style>
